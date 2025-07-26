@@ -28,12 +28,12 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 // import '~/index.css'
 
 import { createApp } from 'vue';
-import App from '@/src/app/root.vue';
-import router from '@/src/app/router';
+import App from '@/src/admin/views/HomePage/Homepage.vue';
+import router from '@/src/admin/router';
 import '@/src/global/index.css';
 
 const app = createApp(App);
 
 app.use(router);
 
-app.mount('#app');
+app.mount('#admin-app');
