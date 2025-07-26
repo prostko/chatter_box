@@ -13,4 +13,4 @@ RSpec.describe "Application Smoke Test", type: :smoke do
     expect(name).not_to be_empty
     expect(name).to match(/\w+/)
   end
-end 
+end
