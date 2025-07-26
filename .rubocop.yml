@@ -6,3 +6,27 @@ inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 # # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
 # Layout/SpaceInsideArrayLiteralBrackets:
 #   Enabled: false
+
+# Enforce 2-space indentation
+Layout/IndentationWidth:
+  Width: 2
+
+# Ensure no tabs are used
+Layout/IndentationStyle:
+  Enabled: true
+
+# Enforce consistent indentation in method definitions
+Layout/FirstHashElementIndentation:
+  IndentationWidth: 2
+
+# Enforce consistent indentation in arrays
+Layout/FirstArrayElementIndentation:
+  IndentationWidth: 2
+
+# Enforce consistent indentation in method parameters
+Layout/FirstParameterIndentation:
+  IndentationWidth: 2
+
+# Enforce consistent indentation in method arguments
+Layout/FirstArgumentIndentation:
+  IndentationWidth: 2
