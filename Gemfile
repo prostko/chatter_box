@@ -34,7 +34,11 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# Debugging
 gem "pry"
+
+# Load environment variables from .env file
+gem "dotenv-rails"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -50,6 +54,8 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+
+  # Database annotations for models and factories
   gem "annotate"
 end
 
@@ -61,11 +67,14 @@ group :test do
   # RSpec testing framework
   gem "rspec-rails"
 
+  # Database cleaner, runs individual tests in transactions
   gem "database_cleaner-active_record"
 
   gem "factory_bot_rails"
 
+  # Generating fake data
   gem "faker"
 
+  # Code coverage
   gem "simplecov", require: false
 end
