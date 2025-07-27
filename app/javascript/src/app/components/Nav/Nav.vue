@@ -58,6 +58,9 @@
             <span class="text-sm/6 text-gray-900">
               Welcome, {{ userStore.currentUser?.name || 'User' }}
             </span>
+            <a href="/admin" v-if="userStore.isAdmin" class="text-sm/6 text-gray-900">
+              Admin Panel
+            </a>
             <button 
               @click="handleLogout" 
               class="text-sm/6 font-semibold text-gray-900 hover:text-gray-700"
@@ -130,7 +133,7 @@
   </template>
   
   <script setup>
-  import { ref, nextTick } from 'vue'
+  import { ref } from 'vue'
   import { useUserStore } from '../../stores/user'
   import {
     Dialog,
