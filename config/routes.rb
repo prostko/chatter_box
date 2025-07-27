@@ -16,6 +16,12 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :admin_api do
+    namespace :v1 do
+      resources :users, only: [:index]
+    end
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -26,7 +32,9 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  get "admin" => "home#admin", as: :admin
+  # Admin routes - any path starting with /admin goes to admin
+  get "admin/*path" => "home#admin", as: :admin
+  get "admin" => "home#admin", as: :admin_root
 
   # Defines the root path route ("/")
   root "home#index"
