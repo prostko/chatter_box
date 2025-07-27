@@ -43,7 +43,29 @@
           <a href="#" class="text-sm/6 font-semibold text-gray-900">About</a>
         </PopoverGroup>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" class="text-sm/6 font-semibold text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+          <!-- Logged out state -->
+          <div v-if="!userStore.isLoggedIn" class="flex items-center gap-4">
+            <router-link to="/sign_in" class="text-sm/6 font-semibold text-gray-900 hover:text-gray-700">
+              Log in
+            </router-link>
+            <router-link to="/sign_up" class="text-sm/6 font-semibold text-white bg-indigo-600 px-4 py-2 rounded-md hover:bg-indigo-700">
+              Register
+            </router-link>
+          </div>
+          
+          <!-- Logged in state -->
+          <div v-else class="flex items-center gap-4">
+            <span class="text-sm/6 text-gray-900">
+              Welcome, {{ userStore.currentUser?.name || 'User' }}
+            </span>
+            <button 
+              @click="handleLogout" 
+              class="text-sm/6 font-semibold text-gray-900 hover:text-gray-700"
+              :disabled="userStore.loading"
+            >
+              {{ userStore.loading ? 'Logging out...' : 'Log out' }}
+            </button>
+          </div>
         </div>
       </nav>
       <Dialog class="lg:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
@@ -76,7 +98,29 @@
                 <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Company</a>
               </div>
               <div class="py-6">
-                <a href="#" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Log in</a>
+                <!-- Logged out state -->
+                <div v-if="!userStore.isLoggedIn" class="space-y-2">
+                  <router-link to="/sign_in" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
+                    Log in
+                  </router-link>
+                  <router-link to="/sign_up" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white bg-indigo-600 hover:bg-indigo-700">
+                    Register
+                  </router-link>
+                </div>
+                
+                <!-- Logged in state -->
+                <div v-else class="space-y-2">
+                  <div class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 text-gray-900">
+                    Welcome, {{ userStore.currentUser?.user?.username || 'User' }}
+                  </div>
+                  <button 
+                    @click="handleLogout" 
+                    class="-mx-3 block w-full text-left rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                    :disabled="userStore.loading"
+                  >
+                    {{ userStore.loading ? 'Logging out...' : 'Log out' }}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -86,7 +130,8 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue'
+  import { ref, nextTick } from 'vue'
+  import { useUserStore } from '../../stores/user'
   import {
     Dialog,
     DialogPanel,
@@ -106,9 +151,17 @@
   } from '@heroicons/vue/24/outline'
   import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/vue/20/solid'
   
+  const userStore = useUserStore()
+  
   const products = [
     { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
   ]
   
   const mobileMenuOpen = ref(false)
+  
+  const handleLogout = async () => {
+    await userStore.logout()
+    mobileMenuOpen.value = false
+    window.location.reload()
+  }
   </script>

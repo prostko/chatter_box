@@ -28,12 +28,15 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 // import '~/index.css'
 
 import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 import App from '@/src/app/root.vue';
 import router from '@/src/app/router';
 import '@/src/global/index.css';
 
 const app = createApp(App);
+const pinia = createPinia();
 
+app.use(pinia);
 app.use(router);
 
 app.mount('#app');

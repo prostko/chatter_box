@@ -64,7 +64,9 @@ import { ChatBubbleLeftRightIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '@/src/global/services/api';
+import { useUserStore } from '@/src/app/stores/user';
 
+const userStore = useUserStore();
 const router = useRouter();
 const email = ref('');
 const password = ref('');
@@ -103,6 +105,7 @@ const handleSubmit = async () => {
     }
   } finally {
     loading.value = false;
+    userStore.fetchCurrentUser()
   }
 };
 </script>
