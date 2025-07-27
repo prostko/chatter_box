@@ -64,7 +64,7 @@ import { ChatBubbleLeftRightIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '@/src/global/services/api';
-import { useUserStore } from '@/src/app/stores/user';
+import { useUserStore } from '@/src/global/stores/UserStore';
 
 const userStore = useUserStore();
 const router = useRouter();

@@ -1,13 +1,5 @@
 class Identity::PasswordResetsController < ApplicationController
-  skip_before_action :authenticate
-
-  before_action :set_user, only: %i[ edit update ]
-
-  def new
-  end
-
-  def edit
-  end
+  before_action :set_user, only: %i[ update ]
 
   def create
     if @user = User.find_by(email: params[:email], verified: true)

@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  before_action :authenticate, only: :admin
+
   def index
     render template: 'layouts/app'
   end
@@ -7,7 +9,7 @@ class HomeController < ApplicationController
     if !Current.user.admin
       redirect_to root_path, status: :not_found
     end
-    
+
     render template: 'layouts/admin'
   end
 end
