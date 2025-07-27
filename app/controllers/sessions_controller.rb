@@ -1,11 +1,6 @@
 class SessionsController < ApplicationController
-  skip_before_action :authenticate, only: %i[ new create ]
-
+  before_action :authenticate!, only: %i[destroy]
   before_action :set_session, only: :destroy
-
-  def index
-    @sessions = Current.user.sessions.order(created_at: :desc)
-  end
 
   def new
   end
@@ -15,7 +10,6 @@ class SessionsController < ApplicationController
       @session = user.sessions.create!
       cookies.signed.permanent[:session_token] = { value: @session.id, httponly: true }
       render json: { success: true, message: "Signed in successfully" }
-
     else
       render json: { error: "That email or password is incorrect" }, status: :unauthorized
     end

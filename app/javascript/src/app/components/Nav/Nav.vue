@@ -114,14 +114,13 @@
                 <!-- Logged in state -->
                 <div v-else class="space-y-2">
                   <div class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 text-gray-900">
-                    Welcome, {{ userStore.currentUser?.user?.username || 'User' }}
+                    Welcome, {{ userStore.currentUser?.username || 'User' }}
                   </div>
                   <button 
                     @click="handleLogout" 
                     class="-mx-3 block w-full text-left rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                    :disabled="userStore.loading"
                   >
-                    {{ userStore.loading ? 'Logging out...' : 'Log out' }}
+                    Log out
                   </button>
                 </div>
               </div>
@@ -134,7 +133,8 @@
   
   <script setup>
   import { ref } from 'vue'
-  import { useUserStore } from '../../stores/user'
+  import { useUserStore } from '@/src/global/stores/UserStore'
+
   import {
     Dialog,
     DialogPanel,
@@ -165,6 +165,5 @@
   const handleLogout = async () => {
     await userStore.logout()
     mobileMenuOpen.value = false
-    window.location.reload()
   }
   </script>

@@ -1,10 +1,15 @@
 class PasswordsController < ApplicationController
   before_action :set_user
 
-  def edit
-  end
-
   def update
+    if !@user
+      render json: { 
+        error: "We skipped the email verification step", 
+        errors: ["User not found (we should really implement the email verification step ;) )"] 
+      }, status: :not_found
+      return
+    end
+
     if @user.update(user_params)
       render json: { success: true, message: "Your password has been changed" }
     else

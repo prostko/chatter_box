@@ -1,10 +1,8 @@
 Rails.application.routes.draw do
-  # get  "sign_in", to: "sessions#new"
   post "sign_in", to: "sessions#create"
-  get  "sign_up", to: "registrations#new"
   post "sign_up", to: "registrations#create"
   get  "sign_out", to: "sessions#destroy"
-  resources :sessions, only: [:index, :show, :destroy]
+  resources :sessions, only: [:show, :destroy]
   resource  :password, only: [:edit, :update]
   namespace :identity do
     resource :email,              only: [:edit, :update]
@@ -13,7 +11,15 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resource :current_user, only: [:show], controller: :current_user
+    namespace :v1 do
+      resource :current_user, only: [:show], controller: :current_user
+    end
+  end
+
+  namespace :admin_api do
+    namespace :v1 do
+      resources :users, only: [:index]
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -26,7 +32,9 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  get "admin" => "home#admin", as: :admin
+  # Admin routes - any path starting with /admin goes to admin
+  get "admin/*path" => "home#admin", as: :admin
+  get "admin" => "home#admin", as: :admin_root
 
   # Defines the root path route ("/")
   root "home#index"

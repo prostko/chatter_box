@@ -77,3 +77,5 @@ group :test do
   # Code coverage
   gem "simplecov", require: false
 end
+
+gem "dockerfile-rails", ">= 1.7", :group => :development
