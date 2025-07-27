@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :authenticate, only: %i[destroy]
+  before_action :authenticate!, only: %i[destroy]
   before_action :set_session, only: :destroy
 
   def new
@@ -10,7 +10,6 @@ class SessionsController < ApplicationController
       @session = user.sessions.create!
       cookies.signed.permanent[:session_token] = { value: @session.id, httponly: true }
       render json: { success: true, message: "Signed in successfully" }
-
     else
       render json: { error: "That email or password is incorrect" }, status: :unauthorized
     end

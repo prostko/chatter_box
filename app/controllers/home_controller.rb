@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
-  before_action :authenticate, only: :admin
-
+  before_action :authenticate!, only: :admin
+  
   def index
     render template: 'layouts/app'
   end
