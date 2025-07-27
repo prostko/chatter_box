@@ -36,6 +36,9 @@ gem "dotenv-rails"
 # frontend build tool
 gem "vite_rails"
 
+# Low overhead authentication gem
+gem "authentication-zero"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
