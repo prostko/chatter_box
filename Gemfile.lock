@@ -78,6 +78,7 @@ GEM
       activerecord (>= 3.2, < 8.0)
       rake (>= 10.4, < 14.0)
     ast (2.4.3)
+    authentication-zero (4.0.3)
     base64 (0.3.0)
     bcrypt (3.1.20)
     benchmark (0.4.1)
@@ -363,6 +364,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  authentication-zero
   bcrypt (~> 3.1.7)
   bootsnap
   brakeman

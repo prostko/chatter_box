@@ -3,6 +3,8 @@ const Signup = () => import('@/src/app/views/registration/Signup/Signup.vue');
 const Signin = () => import('@/src/app/views/registration/Signin/Signin.vue');
 const Root = () => import('@/src/app/root.vue');
 const Home = () => import('@/src/app/views/Home/Home.vue');
+const PasswordReset = () => import('@/src/app/views/registration/PasswordReset/PasswordReset.vue');
+const EditPassword = () => import('@/src/app/views/registration/EditPassword/EditPassword.vue');
 
 const router = createRouter({
   history: createWebHistory(),
@@ -15,17 +17,31 @@ const router = createRouter({
       }
     },
     {
-      path: '/signup',
+      path: '/sign_up',
       name: 'signup',
       components: {
         default: Signup,
       }
     },
     {
-      path: '/signin',
+      path: '/sign_in',
       name: 'signin',
       components: {
         default: Signin,
+      }
+    },
+    {
+      path: '/password_reset',
+      name: 'password_reset',
+      components: {
+        default: PasswordReset,
+      }
+    },
+    {
+      path: '/password/edit/:email',
+      name: 'password_edit',
+      components: {
+        default: EditPassword,
       }
     },
     {

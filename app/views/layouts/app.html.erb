@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="background-color: #fff; height: 100%;">
   <head>
     <title><%= content_for(:title) || "Chatter Box" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -30,6 +30,7 @@
 
   </head>
 
-  <body id="app">
+  <body id="app" style="height: 100%;">
+    <%= yield %>
   </body>
 </html>
