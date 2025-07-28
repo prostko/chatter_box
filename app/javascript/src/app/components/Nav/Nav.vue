@@ -61,7 +61,7 @@
           <!-- Logged in state -->
           <div v-else class="flex items-center gap-4">
             <span class="text-sm/6 text-gray-900">
-              Welcome, {{ userStore.currentUser?.name || 'User' }}
+              Welcome, {{ userStore.currentUser?.username || 'User' }}
             </span>
             <button 
               @click="handleLogout" 

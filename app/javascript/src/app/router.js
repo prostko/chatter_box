@@ -6,6 +6,7 @@ const PasswordReset = () => import('@/src/app/views/registration/PasswordReset/P
 const EditPassword = () => import('@/src/app/views/registration/EditPassword/EditPassword.vue');
 const ListUserPosts = () => import('@/src/app/views/ListUserPosts/ListUserPosts.vue');
 const NewUserPost = () => import('@/src/app/views/NewUserPost/NewUserPost.vue');
+const EditUserPost = () => import('@/src/app/views/EditUserPost/EditUserPost.vue');
 import { useUserStore } from '@/src/global/stores/UserStore.js';
 import { createPinia } from 'pinia';
 
@@ -89,6 +90,13 @@ const router = createRouter({
         default: NewUserPost,
       },
       beforeEnter
+    },
+    {
+      path: '/posts/:id',
+      name: 'postEdit',
+      components: {
+        default: EditUserPost,
+      },
     }
   ],
 });

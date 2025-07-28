@@ -9,8 +9,8 @@ class Api::V1::Users::PostsController < ApplicationController
   end
 
   def show
-    @post = Post.joins(:authors)
-                .where(authors: { user_id: params[:user_id] })
+    @post = Post.joins(:users)
+                .where(users: { id: params[:user_id] })
                 .find(params[:id])
 
     render json: { post: post_serializer(@post) }
@@ -75,8 +75,8 @@ class Api::V1::Users::PostsController < ApplicationController
       id: post.id,
       title: post.title,
       body: post.body,
-      published_at: post.created_at,
-      published_date: post.created_at.strftime('%B %d, %Y'),
+      published_at: post.updated_at,
+      published_date: post.updated_at.strftime('%B %d, %Y'),
       created_at: post.created_at,
       updated_at: post.updated_at,
       href: "/posts/#{post.id}",
