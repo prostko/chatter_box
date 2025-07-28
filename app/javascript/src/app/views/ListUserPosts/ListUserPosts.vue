@@ -33,6 +33,13 @@
             </div>
           </article>
         </div>
+
+        <div v-if="posts.length < totalPostCount" class="mt-10">
+          <button class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" 
+          @click="loadMorePosts">
+            Load More
+          </button>
+        </div>
       </div>
     </div>
   </template>
@@ -48,13 +55,35 @@
   const router = useRouter()
 
   const posts = ref([])
+  const totalPostCount = ref(0)
+  const page = ref(1)
+  const perPage = ref(10)
 
   onMounted(async () => {
     if (!userStore.user) {
       await userStore.fetchCurrentUser()
     }
 
-    const response = await api.get(`/api/v1/users/${userStore.user.id}/posts`)
-    posts.value = response.data.posts || []
+    loadPosts()
   })
+
+  const loadPosts = async () => {
+    const response = await api.get(`/api/v1/users/${userStore.user.id}/posts`, {
+      params: {
+        page: page.value,
+        per_page: perPage.value
+      }
+    })
+    totalPostCount.value += response.headers['x-total-count'] || 0
+
+    posts.value ||= []
+    response.data.posts.forEach(post => {
+      posts.value.push(post)
+    })
+  }
+
+  const loadMorePosts = async () => {
+    page.value += 1
+    loadPosts()
+  }
   </script>

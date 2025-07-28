@@ -1,11 +1,20 @@
 class Api::V1::Users::PostsController < ApplicationController
   def index
+    page = params[:page].to_i || 1
+    per_page = params[:per_page].to_i || 10
+
     @posts = Post.joins(:users)
                  .where(users: { id: params[:user_id] },
                         posts: { deleted_at: nil })
-                 .order(published_at: :desc)
 
-    render json: { posts: @posts.map { |post| post_serializer(post) } }
+    # only set the total post count on the first request
+    if page == 1 
+        response.headers['X-Total-Count'] = @posts.count
+    end
+
+    @posts = @posts.offset((page - 1) * per_page).limit(per_page)
+
+    render json: { posts: @posts.map { |post| post_serializer(post) } }, status: :ok
   end
 
   def show
