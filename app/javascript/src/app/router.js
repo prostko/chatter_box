@@ -6,6 +6,21 @@ const PasswordReset = () => import('@/src/app/views/registration/PasswordReset/P
 const EditPassword = () => import('@/src/app/views/registration/EditPassword/EditPassword.vue');
 const ListUserPosts = () => import('@/src/app/views/ListUserPosts/ListUserPosts.vue');
 const NewUserPost = () => import('@/src/app/views/NewUserPost/NewUserPost.vue');
+import { useUserStore } from '@/src/global/stores/UserStore.js';
+import { createPinia } from 'pinia';
+
+// Global State
+const pinia = createPinia()
+
+const beforeEnter = async (to, from, next) => {
+ const userStore = useUserStore(pinia)
+  await userStore.fetchCurrentUser()
+  if (userStore.isLoggedIn) {
+    next()
+  } else {
+    next('/sign_in')
+  }
+}
 
 const router = createRouter({
   history: createWebHistory(),
@@ -64,16 +79,23 @@ const router = createRouter({
       name: 'posts',
       components: {
         default: ListUserPosts,
-      }
+      },
+      beforeEnter
     },
     {
       path: '/posts/new',
       name: 'new_post',
       components: {
         default: NewUserPost,
-      }
+      },
+      beforeEnter
     }
   ],
 });
+
+// Add router to Pinia stores
+pinia.use(({ store }) => {
+	store.router = markRaw(router)
+})
 
 export default router;
