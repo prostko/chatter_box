@@ -27,8 +27,9 @@ class User < ApplicationRecord
     password_salt.last(10)
   end
 
-
   has_many :sessions, dependent: :destroy
+  has_many :authors
+  has_many :posts, through: :authors
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, allow_nil: true, length: { minimum: 12 }

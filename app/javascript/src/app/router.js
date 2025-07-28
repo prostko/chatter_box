@@ -4,6 +4,7 @@ const Signin = () => import('@/src/app/views/registration/Signin/Signin.vue');
 const Home = () => import('@/src/app/views/Home/Home.vue');
 const PasswordReset = () => import('@/src/app/views/registration/PasswordReset/PasswordReset.vue');
 const EditPassword = () => import('@/src/app/views/registration/EditPassword/EditPassword.vue');
+const ListUserPosts = () => import('@/src/app/views/ListUserPosts/ListUserPosts.vue');
 
 const router = createRouter({
   history: createWebHistory(),
@@ -50,6 +51,20 @@ const router = createRouter({
         default: Home,
       },
     },
+    {
+      path: '/discover',
+      name: 'discover',
+      components: {
+        default: Home,
+      }
+    },
+    {
+      path: '/posts',
+      name: 'posts',
+      components: {
+        default: ListUserPosts,
+      }
+    }
   ],
 });
 
