@@ -29,8 +29,6 @@
 
     const response = await api.get(`/api/v1/users/${userStore.user.id}/posts/${postID}`)
     post.value = response.data.post
-    console.log('post', post.value)
-    console.log('post.value.title', post.value.title)
   })
 
   const handleSubmit = async (post) => {

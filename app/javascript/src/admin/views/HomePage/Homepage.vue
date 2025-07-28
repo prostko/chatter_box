@@ -31,7 +31,6 @@
   onMounted(async () => {
     await api.get('/admin_api/v1/users')
       .then(response => {
-        console.log(response.data.length)
         stats.value.total_users.stat = response.data.length    
       })
       .catch(error => {

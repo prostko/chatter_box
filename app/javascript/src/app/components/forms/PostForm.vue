@@ -104,11 +104,5 @@
       title: title.value,
       body: body.value
     })
-
-    // const response = await api.post(`/api/v1/users/${userStore.user.id}/posts`, {
-    //   title: title.value,
-    //   body: body.value
-    // })
-    // console.log(response)
   }
   </script>
