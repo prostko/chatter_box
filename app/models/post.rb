@@ -11,18 +11,14 @@
 #  updated_at   :datetime         not null
 #
 class Post < ApplicationRecord
-    has_many :authors
-    has_many :users, through: :authors
+    has_and_belongs_to_many :users, join_table: :authors
 
     scope :deleted, -> { where.not(deleted_at: nil) }
     scope :active, -> { published.not_deleted }
 
     validates :title, presence: true, length: { maximum: 100 }
     validates :body, presence: true, length: { maximum: 1000 }
-    validates :published_at, presence: true
    
-    before_validation :set_published_at, on: :create
-
     # The following methods are used for soft deletion
     # It would probably be better to use a gem like acts_as_paranoid or similar for this
     def destroy

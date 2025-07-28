@@ -14,9 +14,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :current_user, only: [:show], controller: :current_user
 
-      resources :posts, only: [:index]
-      resources :users do
-        resources :posts, only: [:index]
+      resources :posts
+      resources :users do 
+        resources :posts, controller: 'users/posts'
       end
     end
   end

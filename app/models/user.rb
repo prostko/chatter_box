@@ -28,8 +28,7 @@ class User < ApplicationRecord
   end
 
   has_many :sessions, dependent: :destroy
-  has_many :authors
-  has_many :posts, through: :authors
+  has_and_belongs_to_many :posts, join_table: :authors
 
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, allow_nil: true, length: { minimum: 12 }

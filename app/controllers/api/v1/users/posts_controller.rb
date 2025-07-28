@@ -1,8 +1,8 @@
 class Api::V1::Users::PostsController < ApplicationController
   def index
-    @posts = Post.joins(:authors)
-                 .where(authors: { user_id: params[:user_id] })
-                 .where(posts: { deleted_at: nil })
+    @posts = Post.joins(:users)
+                 .where(users: { id: params[:user_id] },
+                        posts: { deleted_at: nil })
                  .order(published_at: :desc)
 
     render json: { posts: @posts.map { |post| post_serializer(post) } }
@@ -23,13 +23,18 @@ class Api::V1::Users::PostsController < ApplicationController
   end
 
   def create
-    @post = User.find(params[:user_id]).posts.new(post_params)
+    @post = Post.new(post_params)
 
-    if @post.save
-      render json: { post: @post }, status: :created
-    else
-      render json: { errors: @post.errors }, status: :unprocessable_entity
+    ActiveRecord::Base.transaction do
+      @post.save!
+      Author.create!(user_id: params[:user_id], post_id: @post.id)
     end
+
+    render json: { post: @post }, status: :created
+  rescue ActiveRecord::RecordInvalid => e
+    post = Post.new(post_params)
+    post.valid?
+    render json: { errors: post.errors }, status: :unprocessable_entity
   end
 
   def edit
@@ -70,8 +75,8 @@ class Api::V1::Users::PostsController < ApplicationController
       id: post.id,
       title: post.title,
       body: post.body,
-      published_at: post.published_at,
-      published_date: post.published_at.strftime('%B %d, %Y'),
+      published_at: post.created_at,
+      published_date: post.created_at.strftime('%B %d, %Y'),
       created_at: post.created_at,
       updated_at: post.updated_at,
       href: "/posts/#{post.id}",
