@@ -16,7 +16,7 @@
         <PopoverGroup class="hidden lg:flex lg:gap-x-12">
           <Popover class="relative">
             <PopoverButton class="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900">
-              Menu
+              Create
               <ChevronDownIcon class="size-5 flex-none text-gray-400" aria-hidden="true" />
             </PopoverButton>
   
@@ -43,7 +43,7 @@
           <a href="/admin" v-if="userStore.isAdmin" class="text-sm/6 font-semibold text-gray-900">
             Admin Panel
           </a>
-          <a href="#" v-if="!userStore.isAdmin" class="text-sm/6 font-semibold text-gray-300">
+          <a href="#" v-if="!userStore.isAdmin && userStore.isLoggedIn" class="text-sm/6 font-semibold text-gray-300">
             Admin Panel
           </a>
         </PopoverGroup>
@@ -91,7 +91,7 @@
               <div class="space-y-2 py-6">
                 <Disclosure as="div" class="-mx-3" v-slot="{ open }">
                   <DisclosureButton class="flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
-                    Menu
+                    Create
                     <ChevronDownIcon :class="[open ? 'rotate-180' : '', 'size-5 flex-none']" aria-hidden="true" />
                   </DisclosureButton>
                   <DisclosurePanel class="mt-2 space-y-2">
@@ -100,7 +100,7 @@
                   <a href="/admin" v-if="userStore.isAdmin" class="block rounded-lg py-2 pr-3 pl-3 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50">
                     Admin Panel
                   </a>
-                  <a href="#" v-if="!userStore.isAdmin" class="block rounded-lg py-2 pr-3 pl-3 text-sm/7 font-semibold text-gray-300 hover:bg-gray-50">
+                  <a href="#" v-if="!userStore.isAdmin && userStore.isLoggedIn" class="block rounded-lg py-2 pr-3 pl-3 text-sm/7 font-semibold text-gray-300 hover:bg-gray-50">
                     Admin Panel
                   </a>
                 </Disclosure>

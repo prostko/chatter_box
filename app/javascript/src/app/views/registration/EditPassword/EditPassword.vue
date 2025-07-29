@@ -109,8 +109,6 @@
       
       router.push('/sign_in');
     } catch (err) {
-      console.error('Password update error:', err);
-      debugger
       if (err.response?.data?.errors.length > 0) {
         error.value = err.response.data.errors.join('\n');
       } else if (err.response?.status === 422) {

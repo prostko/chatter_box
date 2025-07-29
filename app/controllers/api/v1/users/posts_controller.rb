@@ -86,9 +86,8 @@ class Api::V1::Users::PostsController < ApplicationController
       body: post.body,
       published_at: post.updated_at,
       published_date: post.updated_at.strftime('%B %d, %Y'),
-      created_at: post.created_at,
-      updated_at: post.updated_at,
-      href: "/posts/#{post.id}",
+      rating: post.average_rating,
+      href: "/posts/#{post.id}/edit",
     }
   end
 end

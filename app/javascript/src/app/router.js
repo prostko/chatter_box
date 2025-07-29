@@ -7,6 +7,8 @@ const EditPassword = () => import('@/src/app/views/registration/EditPassword/Edi
 const ListUserPosts = () => import('@/src/app/views/ListUserPosts/ListUserPosts.vue');
 const NewUserPost = () => import('@/src/app/views/NewUserPost/NewUserPost.vue');
 const EditUserPost = () => import('@/src/app/views/EditUserPost/EditUserPost.vue');
+const AllPosts = () => import('@/src/app/views/AllPosts/AllPosts.vue');
+
 import { useUserStore } from '@/src/global/stores/UserStore.js';
 import { createPinia } from 'pinia';
 
@@ -92,10 +94,17 @@ const router = createRouter({
       beforeEnter
     },
     {
-      path: '/posts/:id',
+      path: '/posts/:id/edit',
       name: 'postEdit',
       components: {
         default: EditUserPost,
+      },
+    },
+    {
+      path: '/discover',
+      name: 'discover',
+      components: {
+        default: AllPosts,
       },
     }
   ],

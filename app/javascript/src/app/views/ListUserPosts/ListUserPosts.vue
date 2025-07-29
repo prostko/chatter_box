@@ -22,11 +22,14 @@
             <div class="flex items-center gap-x-4 text-xs">
               <time :datetime="post.created_at" class="text-gray-500">{{ post.published_date }}</time>
             </div>
+            <div class="flex items-center gap-x-2">
+              <RatingStars :rating="post.rating" :rating-count="post.rating_count" />
+            </div>
             <div class="group relative grow">
               <h3 class="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
                 <a :href="post.href">
                   <span class="absolute inset-0" />
-                  {{ post.title }}
+                  {{ post.title }} />
                 </a>
               </h3>
               <p class="mt-5 line-clamp-3 text-sm/6 text-gray-600">{{ post.body }}</p>
@@ -50,6 +53,7 @@
   import api from '@/src/global/services/api';
   import { useUserStore } from '@/src/global/stores/UserStore';
   import Nav from '@/src/app/components/Nav/Nav.vue';
+  import RatingStars from '@/src/app/components/RatingStars/RatingStars.vue';
 
   const userStore = useUserStore()
   const router = useRouter()

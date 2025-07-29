@@ -12,13 +12,18 @@
 #
 class Post < ApplicationRecord
     has_and_belongs_to_many :users, join_table: :authors
+    has_many :ratings, dependent: :destroy, class_name: 'Post::Rating'
 
     scope :deleted, -> { where.not(deleted_at: nil) }
     scope :active, -> { published.not_deleted }
 
     validates :title, presence: true, length: { maximum: 100 }
     validates :body, presence: true, length: { maximum: 1000 }
-   
+
+    def average_rating
+      ratings.average(:rating).to_f.round(1) || 0.0
+    end
+
     # The following methods are used for soft deletion
     # It would probably be better to use a gem like acts_as_paranoid or similar for this
     def destroy
