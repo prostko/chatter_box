@@ -29,7 +29,7 @@
               <h3 class="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
                 <a :href="post.href">
                   <span class="absolute inset-0" />
-                  {{ post.title }} />
+                  {{ post.title }}
                 </a>
               </h3>
               <p class="mt-5 line-clamp-3 text-sm/6 text-gray-600">{{ post.body }}</p>

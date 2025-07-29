@@ -16,7 +16,7 @@
             <p class="truncate">by {{ post.authors.map(author => author.name).join(', ') }}</p>
           </div>
         </div>
-        <div class="flex flex-none items-center gap-x-4" v-if="post.authors.map(author => author.id).includes(userStore.currentUser.id)">
+        <div class="flex flex-none items-center gap-x-4" v-if="post.can_edit">
           <Menu as="div" class="relative flex-none">
             <MenuButton class="relative block text-gray-500 hover:text-gray-900">
               <span class="absolute -inset-2.5" />
@@ -71,8 +71,12 @@ const getPosts = async () => {
         params: {
             page: page.value,
             per_page: perPage.value
+        },
+        headers: {
+            'X-Total-Count': totalPosts.value
         }
     });
+
     response.data.posts.forEach(post => {
         posts.value.push(post);
     });

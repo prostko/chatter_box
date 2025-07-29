@@ -10,7 +10,7 @@ class Api::V1::PostsController < ApplicationController
     per_page = params[:per_page].to_i || 10
 
     # only set the total post count on the first request
-    if page == 1 
+    if request.headers['X-Total-Count'].blank?
         response.headers['X-Total-Count'] = Post.count
     end
 
@@ -30,6 +30,7 @@ class Api::V1::PostsController < ApplicationController
       published_date: post.updated_at.strftime('%B %d, %Y'),
       rating: 0,
       rating_count: post.ratings.count,
+      can_edit: post.users.map(&:id).include?(params[:user_id].to_i),
       authors: post.users.map do |user| 
         {
             id: user.id,
