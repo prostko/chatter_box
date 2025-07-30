@@ -2,7 +2,7 @@
     <div 
         :id="`rating-stars-${postId}`"
         class="flex items-center relative z-10" 
-        @click="showRatingModal = true">
+        @click.prevent="showRatingModal = true">
         <div v-if="ratingCount === 0">
             <span class="text-xs text-gray-500 z-10">No ratings yet</span>
         </div>

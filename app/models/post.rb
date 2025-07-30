@@ -14,6 +14,7 @@ class Post < ApplicationRecord
     has_and_belongs_to_many :users, join_table: :authors
     has_many :ratings, dependent: :destroy, class_name: 'Post::Rating'
     has_one :cached_rating, class_name: 'Post::CachedRating'
+    has_one :cached_view_count, class_name: 'Post::CachedViewCount'
 
     scope :deleted, -> { where.not(deleted_at: nil) }
     scope :active, -> { published.not_deleted }
@@ -23,6 +24,10 @@ class Post < ApplicationRecord
 
     def average_rating
       cached_rating&.average_rating || 0
+    end
+
+    def total_view_count
+      cached_view_count&.view_count || 0
     end
 
     # The following methods are used for soft deletion

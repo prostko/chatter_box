@@ -21,6 +21,15 @@ class Api::V1::PostsController < ApplicationController
     render json: {posts: @posts.map { |post| post_serializer(post) }}
   end
 
+  def show
+    @post = Post.find(params[:id])
+    data = post_serializer(@post) 
+
+    data[:view_count] = @post.total_view_count
+
+    render json: { post: data }
+  end
+
   private
 
   def post_serializer(post)
@@ -30,9 +39,9 @@ class Api::V1::PostsController < ApplicationController
       body: post.body,
       published_at: post.updated_at,
       published_date: post.updated_at.strftime('%B %d, %Y'),
-      rating: 0,
-      rating_count: post.ratings.count,
-      can_edit: post.users.map(&:id).include?(params[:user_id].to_i),
+      href: "/discover/#{post.id}",
+      can_edit: post.users.map(&:id).include?(Current.user.id),
+      edit_url: "/users/#{Current.user.id}/posts/#{post.id}/edit",
       authors: post.users.map do |user| 
         {
             id: user.id,

@@ -8,7 +8,7 @@ class Api::V1::Users::PostsController < ApplicationController
                         posts: { deleted_at: nil })
 
     # only set the total post count on the first request
-    if page == 1 
+    if page == 1
         response.headers['X-Total-Count'] = @posts.count
     end
 

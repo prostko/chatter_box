@@ -8,7 +8,7 @@ const ListUserPosts = () => import('@/src/app/views/ListUserPosts/ListUserPosts.
 const NewUserPost = () => import('@/src/app/views/NewUserPost/NewUserPost.vue');
 const EditUserPost = () => import('@/src/app/views/EditUserPost/EditUserPost.vue');
 const AllPosts = () => import('@/src/app/views/AllPosts/AllPosts.vue');
-
+const Post = () => import('@/src/app/views/Post/Post.vue');
 import { useUserStore } from '@/src/global/stores/UserStore.js';
 import { createPinia } from 'pinia';
 
@@ -86,6 +86,13 @@ const router = createRouter({
         default: EditUserPost,
       },
     },
+    {
+        path: '/discover/:postId',
+        name: 'discoverPost',
+        components: {
+          default: Post,
+        },
+      },
     {
       path: '/discover',
       name: 'discover',

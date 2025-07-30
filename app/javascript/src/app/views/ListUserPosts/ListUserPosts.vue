@@ -21,6 +21,10 @@
           <article v-for="post in posts" :key="post.id" class="flex max-w-xl flex-col items-start justify-between">
             <div class="flex items-center gap-x-4 text-xs">
               <time :datetime="post.created_at" class="text-gray-500">{{ post.published_date }}</time>
+              <svg viewBox="0 0 2 2" class="size-0.5 fill-current">
+              <circle cx="1" cy="1" r="1" />
+            </svg>
+            <p class="text-gray-500">{{ viewCounts[post.id] || 0 }} views</p>
             </div>
             <div class="flex items-center gap-x-2">
               <RatingStars :post-id="post.id" />
@@ -115,6 +119,9 @@
   import Nav from '@/src/app/components/Nav/Nav.vue';
   import RatingStars from '@/src/app/components/RatingStars/RatingStars.vue';
   import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
+  import { useViewCount } from '@/src/app/composables/use-view-count.js';
+
+  const { viewCounts, getViewCount } = useViewCount();
 
   const userStore = useUserStore()
   const router = useRouter()
@@ -143,7 +150,11 @@
       totalPostCount.value = parseInt(response.headers['x-total-count'])
     }
 
-    posts.value = response.data.posts || []
+    posts.value = []
+    response.data.posts.forEach(post => {
+      getViewCount(post.id);
+      posts.value.push(post);
+    });
   }
 
   const goToPage = (pageNum) => {

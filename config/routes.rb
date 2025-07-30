@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
       resources :posts, only: [:index, :show] do 
         resources :ratings, controller: 'posts/ratings', only: [:index]
+        resources :views, controller: 'posts/views', only: [:create, :index]
       end
 
       resources :users do 

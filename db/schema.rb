@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_07_30_190942) do
+ActiveRecord::Schema[7.2].define(version: 2025_07_30_202849) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,6 +30,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_30_190942) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_post_cached_ratings_on_post_id"
+  end
+
+  create_table "post_cached_view_counts", force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.integer "view_count", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_post_cached_view_counts_on_post_id"
   end
 
   create_table "post_ratings", force: :cascade do |t|
@@ -75,6 +83,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_30_190942) do
   add_foreign_key "authors", "posts"
   add_foreign_key "authors", "users"
   add_foreign_key "post_cached_ratings", "posts"
+  add_foreign_key "post_cached_view_counts", "posts"
   add_foreign_key "post_ratings", "posts"
   add_foreign_key "post_ratings", "users"
   add_foreign_key "sessions", "users"
