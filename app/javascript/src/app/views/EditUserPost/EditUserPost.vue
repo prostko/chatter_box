@@ -1,10 +1,17 @@
 <template>
     <Nav />
+
+    <div class="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
+        
+        <PostForm 
+            ref="postForm"
+            @submit="handleSubmit" 
+            :post="post"
+            form-title="Edit Post"
+            subTitle="Make changes to your post"
+        />
+    </div>
     
-    <PostForm 
-      @submit="handleSubmit" 
-      :post="post"
-    />
   </template>
   
   <script setup>
@@ -29,10 +36,25 @@
 
     const response = await api.get(`/api/v1/users/${userStore.user.id}/posts/${postID}`)
     post.value = response.data.post
+
+    const toast = route.query.toast
+    if (toast) {
+      showToast('success', 'Post updated successfully')
+    }
   })
+
+  const postForm = ref(null)        
 
   const handleSubmit = async (post) => {
     const response = await api.put(`/api/v1/users/${userStore.user.id}/posts/${postID}`, post)
     post.value = response.data.post
+
+    if (response.status === 200) {
+      showToast()
+    }
+  }
+
+  const showToast = () => {
+    postForm.value.triggerToast('success', 'Post updated successfully')
   }
   </script>

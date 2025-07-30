@@ -64,21 +64,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/',
-      name: 'root',
-      components: {
-        default: Home,
-      },
-    },
-    {
-      path: '/discover',
-      name: 'discover',
-      components: {
-        default: Home,
-      }
-    },
-    {
-      path: '/posts',
+      path: '/users/:userId/posts',
       name: 'posts',
       components: {
         default: ListUserPosts,
@@ -86,15 +72,15 @@ const router = createRouter({
       beforeEnter
     },
     {
-      path: '/posts/new',
-      name: 'new_post',
+      path: '/users/:userId/posts/new',
+      name: 'newUserPost',
       components: {
         default: NewUserPost,
       },
       beforeEnter
     },
     {
-      path: '/posts/:id/edit',
+      path: '/users/:userId/posts/:id/edit',
       name: 'postEdit',
       components: {
         default: EditUserPost,
@@ -106,7 +92,14 @@ const router = createRouter({
       components: {
         default: AllPosts,
       },
-    }
+    },
+    {
+        path: '/',
+        name: 'root',
+        components: {
+          default: Home,
+        },
+      },
   ],
 });
 

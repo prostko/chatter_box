@@ -10,7 +10,7 @@
             </div>
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
               <button type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" 
-              @click="router.push('/posts/new')"
+              @click="router.push(`/users/${userStore.user.id}/posts/new?showToast=true`)"
               v-if="userStore.user">
                 Create a Post
             </button>

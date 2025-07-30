@@ -16,6 +16,8 @@ class Api::V1::PostsController < ApplicationController
 
     @posts = @posts.offset((page - 1) * per_page).limit(per_page)
 
+    @posts = @posts.order(updated_at: :desc)
+
     render json: {posts: @posts.map { |post| post_serializer(post) }}
   end
 

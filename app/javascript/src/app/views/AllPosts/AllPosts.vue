@@ -13,7 +13,7 @@
             <svg viewBox="0 0 2 2" class="size-0.5 fill-current">
               <circle cx="1" cy="1" r="1" />
             </svg>
-            <p class="truncate">by {{ post.authors.map(author => author.name).join(', ') }}</p>
+            <p class="truncate">by {{ post.authors.map(author => author.username).join(', ') }}</p>
           </div>
         </div>
         <div class="flex flex-none items-center gap-x-4" v-if="post.can_edit">
@@ -72,15 +72,14 @@ const getPosts = async () => {
             page: page.value,
             per_page: perPage.value
         },
-        headers: {
-            'X-Total-Count': totalPosts.value
-        }
     });
 
     response.data.posts.forEach(post => {
         posts.value.push(post);
     });
-    totalPosts.value = response.headers['x-total-count'];
+    if (response.headers['x-total-count']) {
+        totalPosts.value = response.headers['x-total-count'];
+    }
 };
 
 const loadMore = () => {
