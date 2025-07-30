@@ -167,8 +167,8 @@
   const userStore = useUserStore()
   
   const actions = [
-    { name: 'My Posts', description: 'View your posts', href: `/users/${userStore.currentUser.id}/posts`, icon: BookOpenIcon },
-    { name: 'Create Post', description: 'Create a new post', href: `/users/${userStore.currentUser.id}/posts/new`, icon: PencilIcon },
+    { name: 'My Posts', description: 'View your posts', href: `/users/${userStore.currentUser?.id}/posts`, icon: BookOpenIcon },
+    { name: 'Create Post', description: 'Create a new post', href: `/users/${userStore.currentUser?.id}/posts/new`, icon: PencilIcon },
   ]
   
   const mobileMenuOpen = ref(false)
