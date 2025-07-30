@@ -27,8 +27,10 @@
 import { onMounted, onUnmounted, ref, computed } from 'vue'
 import api from '@/src/global/services/api'
 import { useUserStore } from '@/src/global/stores/UserStore'
+import { useRouter } from 'vue-router'
 
 const userStore = useUserStore()
+const router = useRouter()
 
 const props = defineProps({
     postId: {
@@ -87,7 +89,7 @@ onUnmounted(() => {
 
 const setRating = async (star) => {
     if (!userStore.user?.id) {
-        router.push('/login')
+        router.push('/sign_in')
         return
     }
 

@@ -39,6 +39,7 @@ class Api::V1::Users::PostsController < ApplicationController
     ActiveRecord::Base.transaction do
       @post.save!
       Author.create!(user_id: params[:user_id], post_id: @post.id)
+      Post::CachedRating.create!(post_id: @post.id)
     end
 
     render json: { post: @post }, status: :created
@@ -88,7 +89,6 @@ class Api::V1::Users::PostsController < ApplicationController
       body: post.body,
       published_at: post.updated_at,
       published_date: post.updated_at.strftime('%B %d, %Y'),
-      rating: post.average_rating,
       href: "/users/#{Current.user.id}/posts/#{post.id}/edit"
     }
   end

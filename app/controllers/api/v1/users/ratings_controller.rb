@@ -12,7 +12,13 @@ class Api::V1::Users::RatingsController < ApplicationController
 
   def create
     @rating = Post::Rating.new(user_id: Current.user.id, post_id: params[:post_id], rating: params[:rating])
-    @rating.save!
+    
+    ActiveRecord::Base.transaction do
+      @rating.save!
+      PersistAveragePostRating.new(params[:post_id]).call!
+    end
+
+    # TODO: Handle errors gracefully
 
     render json: { rating: @rating }, status: :created
   end
@@ -22,7 +28,12 @@ class Api::V1::Users::RatingsController < ApplicationController
 
     raise ActiveRecord::RecordNotFound unless @rating
 
-    @rating.update(rating: params[:rating])
+    ActiveRecord::Base.transaction do
+      @rating.update!(rating: params[:rating])
+      PersistAveragePostRating.new(params[:post_id]).call!
+    end
+
+    # TODO: Handle errors gracefully
 
     render json: { rating: @rating }, status: :ok
   end
