@@ -7,9 +7,7 @@
         @submit="handleSubmit" 
       />
     </div>
-    
-    <h1 @click="showToast">New User Post</h1>
-  </template>
+      </template>
   
   <script setup>
   import Nav from '@/src/app/components/Nav/Nav.vue';

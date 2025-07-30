@@ -14,6 +14,10 @@
           </button>
         </div>
         <PopoverGroup class="hidden lg:flex lg:gap-x-12">
+          <router-link to="/" class="text-sm/6 font-semibold text-gray-900">
+            Discover
+          </router-link>
+
           <Popover class="relative">
             <PopoverButton class="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900">
               Create
