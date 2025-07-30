@@ -40,8 +40,8 @@ class Api::V1::PostsController < ApplicationController
       published_at: post.updated_at,
       published_date: post.updated_at.strftime('%B %d, %Y'),
       href: "/discover/#{post.id}",
-      can_edit: post.users.map(&:id).include?(Current.user.id),
-      edit_url: "/users/#{Current.user.id}/posts/#{post.id}/edit",
+      can_edit: post.users.map(&:id).include?(Current.user&.id),
+      edit_url: "/users/#{Current.user&.id}/posts/#{post.id}/edit",
       authors: post.users.map do |user| 
         {
             id: user.id,
