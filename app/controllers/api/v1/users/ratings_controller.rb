@@ -1,22 +1,29 @@
 class Api::V1::Users::RatingsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate!
   before_action :set_user
 
   def show
-    @rating = @user.ratings.find(params[:id])
+    @rating = Post::Rating.find_or_initialize_by(user_id: Current.user.id, post_id: params[:post_id])
+    
     render json: { rating: @rating }, status: :ok
   rescue ActiveRecord::RecordNotFound
     render json: { error: 'Rating not found' }, status: :not_found
   end
 
   def create
-    @rating = @user.ratings.create(rating_params)
+    @rating = Post::Rating.new(user_id: Current.user.id, post_id: params[:post_id], rating: params[:rating])
+    @rating.save!
+
     render json: { rating: @rating }, status: :created
   end
 
   def update
-    @rating = @user.ratings.find(params[:id])
-    @rating.update(rating_params)
+    @rating = Post::Rating.find_by(user_id: Current.user.id, post_id: params[:post_id])
+
+    raise ActiveRecord::RecordNotFound unless @rating
+
+    @rating.update(rating: params[:rating])
+
     render json: { rating: @rating }, status: :ok
   end
   

@@ -5,8 +5,6 @@ Rails.application.routes.draw do
   resources :sessions, only: [:show, :destroy]
   resource  :password, only: [:edit, :update]
   namespace :identity do
-    resource :email,              only: [:edit, :update]
-    resource :email_verification, only: [:show, :create]
     resource :password_reset,     only: [:new, :edit, :create, :update]
   end
 
@@ -14,9 +12,15 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :current_user, only: [:show], controller: :current_user
 
-      resources :posts
+      resources :posts, only: [:index, :show] do 
+        resources :ratings, controller: 'posts/ratings', only: [:index]
+      end
+
       resources :users do 
-        resources :posts, controller: 'users/posts'
+        resources :posts, controller: 'users/posts' do 
+          # Rating is a singular resource for a post from a users perspective.
+          resource :rating, controller: 'users/ratings'
+        end
       end
     end
   end

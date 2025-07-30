@@ -23,7 +23,7 @@
               <time :datetime="post.created_at" class="text-gray-500">{{ post.published_date }}</time>
             </div>
             <div class="flex items-center gap-x-2">
-              <RatingStars :rating="post.rating" :rating-count="post.rating_count" />
+              <RatingStars :post-id="post.id" />
             </div>
             <div class="group relative grow">
               <h3 class="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">

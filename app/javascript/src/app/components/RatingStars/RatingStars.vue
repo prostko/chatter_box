@@ -1,29 +1,44 @@
 <template>
-    <div class="flex items-center">
+    <div 
+        :id="`rating-stars-${postId}`"
+        class="flex items-center relative z-10" 
+        @click="showRatingModal = true">
         <div v-if="ratingCount === 0">
-            <span class="text-xs text-gray-500">No ratings yet</span>
+            <span class="text-xs text-gray-500 z-10">No ratings yet</span>
         </div>
         <div v-else>
             <span :class="['stars-container', starClass(rating)]">★★★★★</span>
-            <span class="text-gray-500">{{ rating }} out of {{ ratingCount }}</span>
+            <span class="ml-2 text-xs text-gray-500">{{ rating }} stars from {{ ratingCount }} reviews</span>
         </div>
+
+        <transition enter-active-class="transition ease-out duration-100" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
+            <EditRatingStars 
+            class="z-50 absolute" 
+            v-if="showRatingModal" 
+            :post-id="postId" 
+            @update:rating="updateRating"
+            @close="showRatingModal = false"
+            />
+        </transition>
+        
     </div>
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+import api from '@/src/global/services/api'
+import EditRatingStars from '@/src/app/components/RatingStars/EditRatingStars.vue'
+
 const props = defineProps({
-    rating: {
-        type: Number,
-        required: true,
-        default: 0,
-        validator: (value) => value >= 0 && value <= 5
-    },
-    ratingCount: {
+    postId: {
         type: Number,
         required: true,
         default: 0,
     },
 })
+
+const rating = ref(0)
+const ratingCount = ref(0)
 
 const starClass = (rating) => {
     const ratingOutOf100 = rating * 20.0
@@ -31,12 +46,30 @@ const starClass = (rating) => {
     const starClass = `stars-${ratingOutOf100 - modulo}`
     return starClass
 }
+
+const showRatingModal = ref(false)
+
+onMounted(() => {
+    getRatingsForPost()
+})
+
+const getRatingsForPost = async () => {
+    const response = await api.get(`/api/v1/posts/${props.postId}/ratings`)
+    if (response.status === 200) {
+        const { average_rating, rating_count } = response.data
+        rating.value = average_rating
+        ratingCount.value = rating_count
+    }
+}
+
+const updateRating = () => {
+    getRatingsForPost()
+}
 </script>
 
 <style scoped lang="scss">
-.asdf { font-size: 18px; }
-
 .stars-container {
+  font-size: 18px;
   position: relative;
   display: inline-block;
   color: transparent;

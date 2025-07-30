@@ -4,7 +4,7 @@
         <div class="min-w-0">
           <div class="flex items-start gap-x-3">
             <p class="text-sm/6 font-semibold text-gray-900">{{ post.title }}</p>
-            <RatingStars class="mt-0.5 rounded-md px-1.5 py-0.5 text-xs whitespace-nowrap" :rating="post.rating" :rating-count="post.rating_count" />
+            <RatingStars class="mt-0.5 rounded-md px-1.5 py-0.5 text-xs whitespace-nowrap" :post-id="post.id" />
         </div>
           <div class="mt-1 flex items-center gap-x-2 text-xs/5 text-gray-500">
             <p class="whitespace-nowrap">
