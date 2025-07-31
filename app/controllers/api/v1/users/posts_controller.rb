@@ -49,16 +49,15 @@ class Api::V1::Users::PostsController < ApplicationController
     render json: { errors: post.errors }, status: :unprocessable_entity
   end
 
-  def edit
-    @post = User.find(params[:user_id]).posts.find(params[:id])
-
-    render json: { post: @post }
-  end
-
   def update
     @post = User.find(params[:user_id]).posts.find(params[:id])
-   
-    if @post.update(post_params)
+    
+    successful_update = false 
+    TurnstileMini.lock("post_update_lock:#{@post.id}") do 
+      successful_update = @post.update(post_params)
+    end
+
+    if successful_update
       render json: { post: @post }, status: :ok
     else
       render json: { errors: @post.errors }, status: :unprocessable_entity
