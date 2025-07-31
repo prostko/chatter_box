@@ -10,6 +10,10 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
+# Indexes
+#
+#  index_posts_on_updated_at  (updated_at)
+#
 require "test_helper"
 
 class PostTest < ActiveSupport::TestCase

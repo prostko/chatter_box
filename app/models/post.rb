@@ -10,6 +10,10 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
+# Indexes
+#
+#  index_posts_on_updated_at  (updated_at)
+#
 class Post < ApplicationRecord
     has_and_belongs_to_many :users, join_table: :authors
     has_many :ratings, dependent: :destroy, class_name: 'Post::Rating'
