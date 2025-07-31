@@ -53,7 +53,7 @@ class Api::V1::Users::PostsController < ApplicationController
     @post = User.find(params[:user_id]).posts.find(params[:id])
     
     successful_update = false 
-    TurnstileMini.lock("post_update_lock:#{@post.id}") do 
+    TurnstileMini.lock_with_mutex("post_update_lock:#{@post.id}") do 
       successful_update = @post.update(post_params)
     end
 
