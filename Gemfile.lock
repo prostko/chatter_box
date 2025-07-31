@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/prostko/turnstile_mini.git
+  revision: 00c1bb58d3607ca925bd1cca6ebd4901ebb3f9a0
+  specs:
+    TurnstileMini (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -369,6 +375,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  TurnstileMini!
   annotate
   authentication-zero
   bcrypt (~> 3.1.7)
