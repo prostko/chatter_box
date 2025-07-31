@@ -2,6 +2,8 @@
 
 A modern Rails 7.2 application built with Vue.js, Vite, and PostgreSQL. This application features real-time chat functionality with Redis for Action Cable and a modern frontend built with Vue 3, Pinia, and Tailwind CSS.
 
+Live Preview @ `chatter_box.fly.dev`
+
 ## Ruby version
 
 This application requires Ruby 3.3.4. You can check your Ruby version with:
