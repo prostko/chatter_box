@@ -14,16 +14,20 @@
           </button>
         </div>
         <PopoverGroup class="hidden lg:flex lg:gap-x-12">
+          <router-link to="/" class="text-sm/6 font-semibold text-gray-900">
+            Discover
+          </router-link>
+
           <Popover class="relative">
             <PopoverButton class="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900">
-              Popout
+              Create
               <ChevronDownIcon class="size-5 flex-none text-gray-400" aria-hidden="true" />
             </PopoverButton>
   
             <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
               <PopoverPanel class="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
                 <div class="p-4">
-                  <div v-for="item in products" :key="item.name" class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50">
+                  <div v-for="item in actions" :key="item.name" class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50">
                     <div class="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                       <component :is="item.icon" class="size-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
                     </div>
@@ -40,7 +44,12 @@
             </transition>
           </Popover>
   
-          <a href="#" class="text-sm/6 font-semibold text-gray-900">About</a>
+          <a href="/admin" v-if="userStore.isAdmin" class="text-sm/6 font-semibold text-gray-900">
+            Admin Panel
+          </a>
+          <a href="#" v-if="!userStore.isAdmin && userStore.isLoggedIn" class="text-sm/6 font-semibold text-gray-300">
+            Admin Panel
+          </a>
         </PopoverGroup>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
           <!-- Logged out state -->
@@ -56,11 +65,8 @@
           <!-- Logged in state -->
           <div v-else class="flex items-center gap-4">
             <span class="text-sm/6 text-gray-900">
-              Welcome, {{ userStore.currentUser?.name || 'User' }}
+              Welcome, {{ userStore.currentUser?.username || 'User' }}
             </span>
-            <a href="/admin" v-if="userStore.isAdmin" class="text-sm/6 text-gray-900">
-              Admin Panel
-            </a>
             <button 
               @click="handleLogout" 
               class="text-sm/6 font-semibold text-gray-900 hover:text-gray-700"
@@ -75,10 +81,10 @@
         <div class="fixed inset-0 z-50" />
         <DialogPanel class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div class="flex items-center justify-between">
-            <a href="#" class="-m-1.5 p-1.5">
-              <span class="sr-only">Your Company</span>
-              <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600" alt="" />
-            </a>
+            <router-link to="/" @click="mobileMenuOpen = false" class="-m-1.5 p-1.5">
+              <span class="sr-only">Chatter Box</span>
+              <ChatBubbleLeftRightIcon class="size-6" aria-hidden="true" />
+            </router-link>
             <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700" @click="mobileMenuOpen = false">
               <span class="sr-only">Close menu</span>
               <XMarkIcon class="size-6" aria-hidden="true" />
@@ -88,17 +94,23 @@
             <div class="-my-6 divide-y divide-gray-500/10">
               <div class="space-y-2 py-6">
                 <Disclosure as="div" class="-mx-3" v-slot="{ open }">
+                    <router-link to="/" class="block rounded-lg py-2 pr-3 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
+                        Discover
+                    </router-link>
                   <DisclosureButton class="flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
-                    Popout
+                    Create
                     <ChevronDownIcon :class="[open ? 'rotate-180' : '', 'size-5 flex-none']" aria-hidden="true" />
                   </DisclosureButton>
                   <DisclosurePanel class="mt-2 space-y-2">
-                    <DisclosureButton v-for="item in products" :key="item.name" as="a" :href="item.href" class="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50">{{ item.name }}</DisclosureButton>
+                    <DisclosureButton v-for="item in actions" :key="item.name" as="a" :href="item.href" class="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50">{{ item.name }}</DisclosureButton>
                   </DisclosurePanel>
+                  <router-link to="/admin" v-if="userStore.isAdmin" class="block rounded-lg py-2 pr-3 pl-3 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50">
+                    Admin Panel
+                  </router-link>
+                  <router-link to="#" v-if="!userStore.isAdmin && userStore.isLoggedIn" class="block rounded-lg py-2 pr-3 pl-3 text-sm/7 font-semibold text-gray-300 hover:bg-gray-50">
+                    Admin Panel
+                  </router-link>
                 </Disclosure>
-                <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Features</a>
-                <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Marketplace</a>
-                <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">Company</a>
               </div>
               <div class="py-6">
                 <!-- Logged out state -->
@@ -148,16 +160,18 @@
   } from '@headlessui/vue'
   import {
     Bars3Icon,
-    ChartPieIcon,
     XMarkIcon,
     ChatBubbleLeftRightIcon,
+    BookOpenIcon,
+    PencilIcon,
   } from '@heroicons/vue/24/outline'
-  import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/vue/20/solid'
+  import { ChevronDownIcon } from '@heroicons/vue/20/solid'
   
   const userStore = useUserStore()
   
-  const products = [
-    { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
+  const actions = [
+    { name: 'My Posts', description: 'View your posts', href: `/users/${userStore.currentUser?.id}/posts`, icon: BookOpenIcon },
+    { name: 'Create Post', description: 'Create a new post', href: `/users/${userStore.currentUser?.id}/posts/new`, icon: PencilIcon },
   ]
   
   const mobileMenuOpen = ref(false)
@@ -165,5 +179,7 @@
   const handleLogout = async () => {
     await userStore.logout()
     mobileMenuOpen.value = false
+
+    await userStore.fetchCurrentUser()
   }
   </script>

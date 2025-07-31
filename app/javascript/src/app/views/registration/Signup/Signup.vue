@@ -122,10 +122,6 @@ const handleSubmit = async () => {
       password_confirmation: passwordConfirmation.value
     });
 
-    // Handle successful sign up
-    console.log('Sign up successful:', response.data);
-    
-    // Redirect to home page or dashboard
     router.push('/home');
   } catch (err) {
     console.error('Sign up error:', err);

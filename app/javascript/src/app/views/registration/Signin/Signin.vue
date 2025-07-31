@@ -87,11 +87,7 @@ const handleSubmit = async () => {
       email: email.value,
       password: password.value
     });
-
-    // Handle successful sign in
-    console.log('Sign in successful:', response.data);
     
-    // Redirect to home page or dashboard
     router.push('/home');
   } catch (err) {
     console.error('Sign in error:', err);

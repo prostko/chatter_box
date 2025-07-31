@@ -4,6 +4,26 @@ const Signin = () => import('@/src/app/views/registration/Signin/Signin.vue');
 const Home = () => import('@/src/app/views/Home/Home.vue');
 const PasswordReset = () => import('@/src/app/views/registration/PasswordReset/PasswordReset.vue');
 const EditPassword = () => import('@/src/app/views/registration/EditPassword/EditPassword.vue');
+const ListUserPosts = () => import('@/src/app/views/ListUserPosts/ListUserPosts.vue');
+const NewUserPost = () => import('@/src/app/views/NewUserPost/NewUserPost.vue');
+const EditUserPost = () => import('@/src/app/views/EditUserPost/EditUserPost.vue');
+const AllPosts = () => import('@/src/app/views/AllPosts/AllPosts.vue');
+const Post = () => import('@/src/app/views/Post/Post.vue');
+import { useUserStore } from '@/src/global/stores/UserStore.js';
+import { createPinia } from 'pinia';
+
+// Global State
+const pinia = createPinia()
+
+const beforeEnter = async (to, from, next) => {
+ const userStore = useUserStore(pinia)
+  await userStore.fetchCurrentUser()
+  if (userStore.isLoggedIn) {
+    next()
+  } else {
+    next('/sign_in')
+  }
+}
 
 const router = createRouter({
   history: createWebHistory(),
@@ -44,13 +64,55 @@ const router = createRouter({
       }
     },
     {
-      path: '/',
-      name: 'root',
+      path: '/users/:userId/posts',
+      name: 'posts',
       components: {
-        default: Home,
+        default: ListUserPosts,
+      },
+      beforeEnter
+    },
+    {
+      path: '/users/:userId/posts/new',
+      name: 'newUserPost',
+      components: {
+        default: NewUserPost,
+      },
+      beforeEnter
+    },
+    {
+      path: '/users/:userId/posts/:id/edit',
+      name: 'postEdit',
+      components: {
+        default: EditUserPost,
       },
     },
+    {
+        path: '/discover/:postId',
+        name: 'discoverPost',
+        components: {
+          default: Post,
+        },
+      },
+    {
+      path: '/discover',
+      name: 'discover',
+      components: {
+        default: AllPosts,
+      },
+    },
+    {
+        path: '/',
+        name: 'root',
+        components: {
+          default: Home,
+        },
+      },
   ],
 });
+
+// Add router to Pinia stores
+pinia.use(({ store }) => {
+	store.router = markRaw(router)
+})
 
 export default router;

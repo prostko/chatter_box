@@ -106,15 +106,9 @@
         password: password.value,
         password_confirmation: passwordConfirmation.value,
       });
-  
-      // Handle successful password update
-      console.log('Password update successful:', response.data);
       
-      // Redirect to sign in page
       router.push('/sign_in');
     } catch (err) {
-      console.error('Password update error:', err);
-      debugger
       if (err.response?.data?.errors.length > 0) {
         error.value = err.response.data.errors.join('\n');
       } else if (err.response?.status === 422) {

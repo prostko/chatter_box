@@ -96,7 +96,7 @@ export const useUserStore = defineStore('user', {
         console.error('Logout error:', error)
       } finally {
         this.clearUser()
-        window.location.reload()
+        await this.fetchCurrentUser()
       }
     }
   }

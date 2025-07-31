@@ -23,5 +23,11 @@ module ChatterBox
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Redis cache store
+    config.cache_store = :redis_cache_store, {
+      url: ENV.fetch('REDIS_URL') { 'redis://localhost:6379/1' },
+      namespace: 'cache'
+    }
   end
 end

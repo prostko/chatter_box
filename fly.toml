@@ -40,3 +40,23 @@ console_command = '/rails/bin/rails console'
 [[statics]]
   guest_path = '/rails/public'
   url_prefix = '/'
+
+# Redis service configuration
+[[services]]
+  protocol = 'tcp'
+  internal_port = 6379
+  processes = ['redis']
+
+  [[services.ports]]
+    port = 6379
+    handlers = ['pg_tls']
+    force_https = false
+
+  [[services.tcp_checks]]
+    interval = '15s'
+    timeout = '2s'
+    grace_period = '1s'
+
+[processes]
+  app = 'bin/rails server'
+  redis = 'redis-server --appendonly yes'

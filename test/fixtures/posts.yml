@@ -1,0 +1,24 @@
+# == Schema Information
+#
+# Table name: posts
+#
+#  id           :bigint           not null, primary key
+#  body         :string(1000)
+#  deleted_at   :datetime
+#  published_at :datetime
+#  title        :string(100)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
+one:
+  posts: MyString
+  title: MyString
+  body: MyString
+  deleted_at: 2025-07-27 18:43:18
+
+two:
+  posts: MyString
+  title: MyString
+  body: MyString
+  deleted_at: 2025-07-27 18:43:18
