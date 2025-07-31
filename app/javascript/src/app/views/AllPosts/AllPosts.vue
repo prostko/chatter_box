@@ -2,7 +2,7 @@
     <ul role="list" class="divide-y divide-gray-100">
       <li v-for="post in posts" :key="post.id" class="flex items-center justify-between gap-x-6 py-5">
         <router-link class="min-w-0" :to="post.href">
-          <div class="flex items-start gap-x-3">
+          <div class="flex items-start gap-x-3 z-10">
             <p class="text-sm/6 font-semibold text-gray-900">{{ post.title }}</p>
             <RatingStars class="mt-0.5 rounded-md px-1.5 py-0.5 text-xs whitespace-nowrap" :post-id="post.id" />
           </div>

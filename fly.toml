@@ -59,4 +59,4 @@ console_command = '/rails/bin/rails console'
 
 [processes]
   app = 'bin/rails server'
-  redis = 'redis-server --appendonly yes'
+  redis = 'redis-server'
